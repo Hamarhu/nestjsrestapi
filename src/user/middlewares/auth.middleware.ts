@@ -16,7 +16,7 @@ export class AuthMiddleware implements NestMiddleware {
       return;
     }
 
-    const token = req.headers.authorization.split(' '[1]);
+    const token = req.headers.authorization.split(' '[1]).toString();
     // console.log('token: ', token);
 
     try {
@@ -27,6 +27,7 @@ export class AuthMiddleware implements NestMiddleware {
       req.user = await this.userService.findById(decode.id);
       next();
     } catch (err) {
+      console.log(err);
       req.user = null;
       next();
     }
